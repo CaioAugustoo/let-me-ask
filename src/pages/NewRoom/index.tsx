@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
+
 import homeIllustration from "assets/images/illustration.svg";
 import brandLogo from "assets/images/logo.svg";
 
-import * as S from "./styles";
 import { Button } from "components/Button";
-import { Link } from "react-router-dom";
+
+import * as S from "./styles";
 
 export const NewRoom = () => {
   return (
@@ -21,7 +23,6 @@ export const NewRoom = () => {
         <S.Content>
           <img src={brandLogo} alt="Letmeask logo" />
           <S.CreateRoom>Criar uma nova sala</S.CreateRoom>
-
           <S.Form>
             <input type="text" placeholder="Nome da sala" />
             <Button type="submit">Criar sala</Button>
