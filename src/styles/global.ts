@@ -7,6 +7,8 @@ export const GlobalStyles = createGlobalStyle`
     --google-red: #ea4335;
     --gray: #a8a8b3;
     --main-text: #29292e;
+    --secondary-text: #737380;
+    --auth-link: #e559f9;
 
     --font-main: 'Roboto', sans-serif;
     --font-secondary: 'Poppins', sans-serif;
@@ -25,7 +27,7 @@ export const GlobalStyles = createGlobalStyle`
     color: var(--main-text);
   }
 
-  body, input, button, textarea {
+  body, input, button, textarea, button::placeholder {
     font: var(--font-regular) 16px var(--font-main);
   }
 `;
