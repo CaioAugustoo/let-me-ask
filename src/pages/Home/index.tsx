@@ -2,10 +2,19 @@ import homeIllustration from "assets/images/illustration.svg";
 import brandLogo from "assets/images/logo.svg";
 import googleIcon from "assets/images/google-icon.svg";
 
-import * as S from "./styles";
 import { Button } from "components/Button";
 
+import { useHistory } from "react-router";
+
+import * as S from "./styles";
+
 export const Home = () => {
+  const { push } = useHistory();
+
+  function navigateToRoom() {
+    push("/rooms/new");
+  }
+
   return (
     <S.Wrapper>
       <S.Aside>
@@ -20,7 +29,7 @@ export const Home = () => {
       <S.Main>
         <S.Content>
           <img src={brandLogo} alt="Letmeask logo" />
-          <S.CreateRoom>
+          <S.CreateRoom onClick={navigateToRoom}>
             <img src={googleIcon} alt="Logo do Google" />
             Crie sua sala com o Google
           </S.CreateRoom>

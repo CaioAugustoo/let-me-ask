@@ -3,6 +3,7 @@ import brandLogo from "assets/images/logo.svg";
 
 import * as S from "./styles";
 import { Button } from "components/Button";
+import { Link } from "react-router-dom";
 
 export const NewRoom = () => {
   return (
@@ -26,10 +27,7 @@ export const NewRoom = () => {
             <Button type="submit">Criar sala</Button>
           </S.Form>
           <S.JoinRoom>
-            Quer entrar em uma sala existente?{" "}
-            <a href="#room" target="_blank">
-              Clique aqui
-            </a>
+            Quer entrar em uma sala existente? <Link to="/">Clique aqui</Link>
           </S.JoinRoom>
         </S.Content>
       </S.Main>
