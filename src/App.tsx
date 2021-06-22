@@ -1,5 +1,13 @@
+import { NewRoom } from "pages/NewRoom";
+import { GlobalStyles } from "styles/global";
+
 function App() {
-  return <h1>Hello world</h1>;
+  return (
+    <>
+      <NewRoom />
+      <GlobalStyles />
+    </>
+  );
 }
 
 export default App;
