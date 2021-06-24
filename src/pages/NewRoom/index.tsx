@@ -53,7 +53,9 @@ export const NewRoom = () => {
               value={newRoom}
               onChange={({ target }) => setNewRoom(target.value)}
             />
-            <Button type="submit">Criar sala</Button>
+            <Button type="submit" disabled={newRoom.trim() === ""}>
+              Criar sala
+            </Button>
           </S.Form>
           <S.JoinRoom>
             Quer entrar em uma sala existente? <Link to="/">Clique aqui</Link>
