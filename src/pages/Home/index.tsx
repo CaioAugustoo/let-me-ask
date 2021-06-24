@@ -66,7 +66,9 @@ export const Home = () => {
               value={roomCode}
               onChange={({ target }) => setRoomCode(target.value)}
             />
-            <Button type="submit">Entrar na sala</Button>
+            <Button type="submit" disabled={roomCode.trim() === ""}>
+              Entrar na sala
+            </Button>
           </S.Form>
         </S.Content>
       </S.Main>

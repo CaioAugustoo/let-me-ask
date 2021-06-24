@@ -8,5 +8,9 @@ export type ButtonProps = {
 } & HTMLAttributes<HTMLButtonElement>;
 
 export const Button = ({ type, disabled, children, ...props }: ButtonProps) => {
-  return <S.Button {...props}>{children}</S.Button>;
+  return (
+    <S.Button disabled={disabled} {...props}>
+      {children}
+    </S.Button>
+  );
 };
