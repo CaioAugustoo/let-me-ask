@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import homeIllustration from "assets/images/illustration.svg";
 import brandLogo from "assets/images/logo.svg";
@@ -6,8 +6,31 @@ import brandLogo from "assets/images/logo.svg";
 import { Button } from "components/Button";
 
 import * as S from "./styles";
+import { FormEvent, useState } from "react";
+import { database } from "services/firebase";
+import { useAuth } from "hooks/useAuth";
 
 export const NewRoom = () => {
+  const [newRoom, setNewRoom] = useState("");
+  const { user } = useAuth();
+  const { push } = useHistory();
+
+  async function createNewRoom(e: FormEvent) {
+    e.preventDefault();
+
+    if (newRoom.trim() === "") {
+      return;
+    }
+
+    const roomRef = database.ref("rooms");
+    const firebaseRoom = await roomRef.push({
+      title: newRoom,
+      authorId: user?.id,
+    });
+
+    push(`/rooms/${firebaseRoom.key}`);
+  }
+
   return (
     <S.Wrapper>
       <S.Aside>
@@ -23,8 +46,13 @@ export const NewRoom = () => {
         <S.Content>
           <img src={brandLogo} alt="Letmeask logo" />
           <S.CreateRoom>Criar uma nova sala</S.CreateRoom>
-          <S.Form>
-            <input type="text" placeholder="Nome da sala" />
+          <S.Form onSubmit={createNewRoom}>
+            <input
+              type="text"
+              placeholder="Nome da sala"
+              value={newRoom}
+              onChange={({ target }) => setNewRoom(target.value)}
+            />
             <Button type="submit">Criar sala</Button>
           </S.Form>
           <S.JoinRoom>
