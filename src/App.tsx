@@ -6,6 +6,7 @@ import { GlobalStyles } from "styles/global";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { UserStorage } from "contexts/UserContext";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/rooms/:id" component={Room} />
         </Switch>
       </UserStorage>
+      <Toaster position="bottom-center" />
       <GlobalStyles />
     </BrowserRouter>
   );
