@@ -1,4 +1,5 @@
 import { useHistory } from "react-router";
+import toast from "react-hot-toast";
 
 import homeIllustration from "assets/images/illustration.svg";
 import brandLogo from "assets/images/logo.svg";
@@ -11,7 +12,6 @@ import * as S from "./styles";
 import { useAuth } from "hooks/useAuth";
 import { FormEvent, useState } from "react";
 import { database } from "services/firebase";
-import toast from "react-hot-toast";
 
 export const Home = () => {
   const [roomCode, setRoomCode] = useState("");
@@ -27,13 +27,10 @@ export const Home = () => {
   async function handleJoinRoom(e: FormEvent) {
     e.preventDefault();
 
-    if (roomCode.trim() === "") {
-      return;
-    }
-
+    if (roomCode.trim() === "") return;
     setLoading(true);
-    const roomRef = await database.ref(`rooms/${roomCode}`).get();
 
+    const roomRef = await database.ref(`rooms/${roomCode}`).get();
     if (!roomRef.exists()) {
       toast.error("Room doesn't exists.", {
         icon: "😢",
