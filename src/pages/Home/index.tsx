@@ -11,9 +11,11 @@ import * as S from "./styles";
 import { useAuth } from "hooks/useAuth";
 import { FormEvent, useState } from "react";
 import { database } from "services/firebase";
+import toast from "react-hot-toast";
 
 export const Home = () => {
   const [roomCode, setRoomCode] = useState("");
+  const [loading, setLoading] = useState(false);
   const { user, signInWithGoogle } = useAuth();
   const { push } = useHistory();
 
@@ -29,13 +31,19 @@ export const Home = () => {
       return;
     }
 
+    setLoading(true);
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
 
     if (!roomRef.exists()) {
-      alert("Room doesn't exists.");
+      toast.error("Room doesn't exists.", {
+        icon: "😢",
+      });
+      setRoomCode("");
+      setLoading(false);
       return;
     }
 
+    setLoading(false);
     push(`/rooms/${roomCode}`);
   }
 
@@ -66,8 +74,8 @@ export const Home = () => {
               value={roomCode}
               onChange={({ target }) => setRoomCode(target.value)}
             />
-            <Button type="submit" disabled={roomCode.trim() === ""}>
-              Entrar na sala
+            <Button type="submit" disabled={roomCode.trim() === "" || loading}>
+              {loading ? "Carregando..." : "Entrar na sala"}
             </Button>
           </S.Form>
         </S.Content>

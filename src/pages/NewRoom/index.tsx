@@ -12,6 +12,7 @@ import { useAuth } from "hooks/useAuth";
 
 export const NewRoom = () => {
   const [newRoom, setNewRoom] = useState("");
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const { push } = useHistory();
 
@@ -22,12 +23,14 @@ export const NewRoom = () => {
       return;
     }
 
+    setLoading(true);
     const roomRef = database.ref("rooms");
     const firebaseRoom = await roomRef.push({
       title: newRoom,
       authorId: user?.id,
     });
 
+    setLoading(false);
     push(`/rooms/${firebaseRoom.key}`);
   }
 
@@ -53,8 +56,8 @@ export const NewRoom = () => {
               value={newRoom}
               onChange={({ target }) => setNewRoom(target.value)}
             />
-            <Button type="submit" disabled={newRoom.trim() === ""}>
-              Criar sala
+            <Button type="submit" disabled={newRoom.trim() === "" || loading}>
+              {loading ? "Criando..." : "Criar sala"}
             </Button>
           </S.Form>
           <S.JoinRoom>

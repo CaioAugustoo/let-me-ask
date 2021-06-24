@@ -25,13 +25,19 @@ export const Main = styled.main`
 
   form textarea {
     width: 100% !important;
-    border: 0;
+    border: 2px solid transparent;
     padding: 16px;
     border-radius: 8px;
     background: #fefefe;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     resize: vertical;
     min-height: 130px !important;
+    outline: none;
+    transition: all 0.1s;
+
+    &:focus {
+      border: 2px solid var(--brand-bg);
+    }
   }
 `;
 
@@ -63,7 +69,7 @@ export const FormFooter = styled.div`
   align-items: center;
   margin-top: 16px;
 
-  span {
+  > span {
     font-size: 14px;
     color: var(--secondary-text);
     font-weight: var(--font-medium);
@@ -77,5 +83,23 @@ export const FormFooter = styled.div`
       font-weight: var(--font-medium);
       cursor: pointer;
     }
+  }
+`;
+
+export const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  span {
+    margin-left: 10px;
+    color: var(--main-text);
+    font-weight: var(--font-medium);
+    font-size: 14px;
   }
 `;
