@@ -107,3 +107,5 @@ export const UserInfo = styled.div`
     font-size: 14px;
   }
 `;
+
+export const LikeButton = styled.button``;

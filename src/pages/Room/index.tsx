@@ -4,6 +4,7 @@ import { database } from "services/firebase";
 import toast from "react-hot-toast";
 
 import brandLogo from "assets/images/logo.svg";
+import { ReactComponent as LikeImg } from "assets/images/like.svg";
 
 import { RoomTitleShimmer, UserInfoShimmer } from "shimmers/room";
 import { QuestionShimmer } from "shimmers/question";
@@ -57,6 +58,21 @@ export const Room = () => {
 
     setNewQuestion("");
     setLoading(false);
+  }
+
+  async function handleLikeQuestion(
+    questionId: string,
+    likeId: string | undefined
+  ) {
+    if (likeId) {
+      await database
+        .ref(`rooms/${id}/questions/${questionId}/likes/${likeId}`)
+        .remove();
+    } else {
+      await database.ref(`rooms/${id}/questions/${questionId}/likes`).push({
+        authorId: user?.id,
+      });
+    }
   }
 
   return (
@@ -121,7 +137,21 @@ export const Room = () => {
               <QuestionShimmer />
             ) : (
               questions.map(question => (
-                <Question key={question.id} {...question} />
+                <Question key={question.id} {...question}>
+                  <S.LikeButton
+                    className={question.likeId ? "liked" : ""}
+                    aria-label="Marcar como gostei"
+                    onClick={() =>
+                      handleLikeQuestion(question.id, question.likeId)
+                    }
+                  >
+                    {question.likeCount > 0 && (
+                      <span>{question.likeCount}</span>
+                    )}
+
+                    <LikeImg />
+                  </S.LikeButton>
+                </Question>
               ))
             )}
           </S.QuestionList>

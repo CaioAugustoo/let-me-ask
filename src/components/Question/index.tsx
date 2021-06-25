@@ -4,9 +4,10 @@ import * as S from "./styles";
 export type QuestionProps = {
   content: string;
   author: User;
+  children?: React.ReactNode;
 };
 
-export const Question = ({ content, author }: QuestionProps) => {
+export const Question = ({ content, author, children }: QuestionProps) => {
   return (
     <S.Wrapper>
       <S.Content>{content}</S.Content>
@@ -15,7 +16,7 @@ export const Question = ({ content, author }: QuestionProps) => {
           <img src={author.avatar} alt={author.name} />
           <span>{author.name}</span>
         </S.UserInfo>
-        <div></div>
+        <div>{children}</div>
       </S.Footer>
     </S.Wrapper>
   );

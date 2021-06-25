@@ -3,7 +3,7 @@ import { ButtonProps } from ".";
 
 const buttonModifiers = {
   outlined: () => css`
-    background: #fff;
+    background: transparent;
     border: 1px solid var(--brand-bg);
     color: var(--brand-bg);
   `,
