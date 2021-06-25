@@ -56,6 +56,7 @@ export const NewRoom = () => {
                 placeholder="Nome da sala"
                 value={newRoom}
                 onChange={({ target }) => setNewRoom(target.value)}
+                maxLength={32}
               />
               <Button type="submit" disabled={newRoom.trim() === "" || loading}>
                 {loading ? "Criando..." : "Criar sala"}

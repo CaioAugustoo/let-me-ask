@@ -32,7 +32,7 @@ export const Home = () => {
 
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
     if (!roomRef.exists()) {
-      toast.error("Room doesn't exists.", {
+      toast.error("A sala que você digitou não existe.", {
         icon: "😢",
       });
       setRoomCode("");
@@ -70,6 +70,7 @@ export const Home = () => {
               placeholder="Digite o código da sala"
               value={roomCode}
               onChange={({ target }) => setRoomCode(target.value)}
+              maxLength={32}
             />
             <Button type="submit" disabled={roomCode.trim() === "" || loading}>
               {loading ? "Carregando..." : "Entrar na sala"}

@@ -1,79 +1,43 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 import { database } from "services/firebase";
-import { User } from "contexts/UserContext";
 import toast from "react-hot-toast";
 
 import brandLogo from "assets/images/logo.svg";
 
+import { RoomTitleShimmer, UserInfoShimmer } from "shimmers/room";
+import { QuestionShimmer } from "shimmers/question";
+
+import Head from "components/Helper/Head";
+
 import { Button } from "components/Button";
 import { RoomCode } from "components/RoomCode";
+import { Question } from "components/Question";
 
 import { useAuth } from "hooks/useAuth";
 
 import * as S from "./styles";
-
-import { RoomTitleShimmer, UserInfoShimmer } from "shimmers/room";
-import Head from "components/Helper/Head";
-
-export type Question = {
-  author: User;
-  content: string;
-  isAnswered: boolean;
-  isHighlighted: boolean;
-};
-
-export type FirebaseQuestions = Record<string, Question>;
+import { useRoom } from "hooks/useRoom";
 
 export type RoomParams = {
   id: string;
 };
 
-export type RoomDataProps = {
-  title: string;
-  authorId: string;
-};
-
 export const Room = () => {
   const [newQuestion, setNewQuestion] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isFetchingData, setIsFetchingData] = useState(false);
-  const [roomData, setRoomData] = useState<RoomDataProps>();
-  const [questions, setQuestions] = useState<Question[]>([]);
   const { user } = useAuth();
   const { id } = useParams<RoomParams>();
-
-  useEffect(() => {
-    setIsFetchingData(true);
-    const roomRef = database.ref(`/rooms/${id}`);
-    roomRef.on("value", room => {
-      const databaseRoom = room.val();
-      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
-      const parsedQuestions = Object.entries(firebaseQuestions).map(
-        ([key, value]) => {
-          return {
-            id: key,
-            content: value.content,
-            author: value.author,
-            isHighlighted: value.isHighlighted,
-            isAnswered: value.isAnswered,
-          };
-        }
-      );
-      setRoomData({
-        title: databaseRoom.title,
-        authorId: databaseRoom.authorId,
-      });
-      setQuestions(parsedQuestions);
-      setIsFetchingData(false);
-    });
-  }, [id]);
+  const { isFetchingData, questions, roomData } = useRoom(id);
 
   async function handleSendQuestion(e: FormEvent) {
     e.preventDefault();
 
     if (newQuestion.trim() === "") return;
-    if (!user) toast.error("You must be logged in to send a new question.");
+    if (!user)
+      toast.error(
+        "Você precisa estar autenticado para enviar uma nova pergunta"
+      );
 
     const question = {
       content: newQuestion,
@@ -88,12 +52,12 @@ export const Room = () => {
     setLoading(true);
 
     await database.ref(`/rooms/${id}/questions`).push(question);
-    toast.success("Your question has been sent!", {
+    toast.success("Sua pergunta foi enviada!", {
       icon: "🥳",
     });
 
-    setLoading(false);
     setNewQuestion("");
+    setLoading(false);
   }
 
   return (
@@ -153,11 +117,15 @@ export const Room = () => {
             </S.FormFooter>
           </form>
 
-          <div>
-            {questions.map(question => (
-              <p>{question.content}</p>
-            ))}
-          </div>
+          <S.QuestionList>
+            {isFetchingData ? (
+              <QuestionShimmer />
+            ) : (
+              questions.map(question => (
+                <Question key={question.id} {...question} />
+              ))
+            )}
+          </S.QuestionList>
         </S.Main>
       </S.Wrapper>
     </>
