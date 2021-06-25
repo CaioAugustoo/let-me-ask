@@ -31,12 +31,26 @@ export const Home = () => {
     setLoading(true);
 
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
+
     if (!roomRef.exists()) {
       toast.error("A sala que você digitou não existe.", {
         icon: "😢",
       });
+
       setRoomCode("");
       setLoading(false);
+
+      return;
+    }
+
+    if (roomRef.val().endedAt) {
+      toast.error("A sala informada já foi encerrada.", {
+        icon: "😢",
+      });
+
+      setRoomCode("");
+      setLoading(false);
+
       return;
     }
 

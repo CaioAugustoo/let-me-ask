@@ -56,8 +56,8 @@ export const Room = () => {
       icon: "🥳",
     });
 
-    setNewQuestion("");
     setLoading(false);
+    setNewQuestion("");
   }
 
   async function handleLikeQuestion(
