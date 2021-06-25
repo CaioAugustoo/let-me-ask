@@ -9,15 +9,14 @@ import { RoomTitleShimmer, UserInfoShimmer } from "shimmers/room";
 import { QuestionShimmer } from "shimmers/question";
 
 import Head from "components/Helper/Head";
-
 import { Button } from "components/Button";
 import { RoomCode } from "components/RoomCode";
 import { Question } from "components/Question";
 
 import { useAuth } from "hooks/useAuth";
+import { useRoom } from "hooks/useRoom";
 
 import * as S from "./styles";
-import { useRoom } from "hooks/useRoom";
 
 export type RoomParams = {
   id: string;
