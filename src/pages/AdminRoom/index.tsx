@@ -1,4 +1,5 @@
 import { useHistory, useParams } from "react-router-dom";
+import { database } from "services/firebase";
 
 import brandLogo from "assets/images/logo.svg";
 import { ReactComponent as DeleteImg } from "assets/images/delete.svg";
@@ -12,10 +13,11 @@ import { RoomCode } from "components/RoomCode";
 import { Question } from "components/Question";
 
 import { useRoom } from "hooks/useRoom";
+import { useAuth } from "hooks/useAuth";
 
 import * as S from "./styles";
-import { database } from "services/firebase";
-import toast from "react-hot-toast";
+
+import { deleteQuestionToast, isNotAdminToast } from "utils/toasts";
 
 export type RoomParams = {
   id: string;
@@ -23,19 +25,28 @@ export type RoomParams = {
 
 export const AdminRoom = () => {
   const { id } = useParams<RoomParams>();
+  const { user } = useAuth();
   const { isFetchingData, questions, roomData } = useRoom(id);
   const { push } = useHistory();
 
   async function handleDeleteQuestion(questionId: string) {
+    if (roomData?.authorId !== user?.id) {
+      isNotAdminToast();
+      return;
+    }
+
     if (window.confirm("Tem certeza que deseja excluir essa pergunta?")) {
       await database.ref(`rooms/${id}/questions/${questionId}`).remove();
-      toast("Pergunta excluída!", {
-        icon: "🗑️",
-      });
+      deleteQuestionToast();
     }
   }
 
   async function handleEndRoom() {
+    if (roomData?.authorId !== user?.id) {
+      isNotAdminToast();
+      return;
+    }
+
     await database.ref(`rooms/${id}`).update({
       endedAt: new Date(),
     });
@@ -52,9 +63,11 @@ export const AdminRoom = () => {
 
             <div>
               <RoomCode code={id} />
-              <Button type="button" isOutlined onClick={handleEndRoom}>
-                Encerrar sala
-              </Button>
+              {roomData?.authorId === user?.id && (
+                <Button type="button" isOutlined onClick={handleEndRoom}>
+                  Encerrar sala
+                </Button>
+              )}
             </div>
           </S.Content>
         </header>

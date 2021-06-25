@@ -1,5 +1,4 @@
 import { useHistory } from "react-router";
-import toast from "react-hot-toast";
 
 import homeIllustration from "assets/images/illustration.svg";
 import brandLogo from "assets/images/logo.svg";
@@ -12,6 +11,7 @@ import * as S from "./styles";
 import { useAuth } from "hooks/useAuth";
 import { FormEvent, useState } from "react";
 import { database } from "services/firebase";
+import { roomEndedToast, roomNotFoundToast } from "utils/toasts";
 
 export const Home = () => {
   const [roomCode, setRoomCode] = useState("");
@@ -33,10 +33,7 @@ export const Home = () => {
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
 
     if (!roomRef.exists()) {
-      toast.error("A sala que você digitou não existe.", {
-        icon: "😢",
-      });
-
+      roomNotFoundToast();
       setRoomCode("");
       setLoading(false);
 
@@ -44,10 +41,7 @@ export const Home = () => {
     }
 
     if (roomRef.val().endedAt) {
-      toast.error("A sala informada já foi encerrada.", {
-        icon: "😢",
-      });
-
+      roomEndedToast();
       setRoomCode("");
       setLoading(false);
 

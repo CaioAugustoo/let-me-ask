@@ -1,7 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 import { database } from "services/firebase";
-import toast from "react-hot-toast";
 
 import brandLogo from "assets/images/logo.svg";
 import { ReactComponent as LikeImg } from "assets/images/like.svg";
@@ -18,6 +17,7 @@ import { useAuth } from "hooks/useAuth";
 import { useRoom } from "hooks/useRoom";
 
 import * as S from "./styles";
+import { isNotAuthenticatedToast, questionSentToast } from "utils/toasts";
 
 export type RoomParams = {
   id: string;
@@ -34,10 +34,7 @@ export const Room = () => {
     e.preventDefault();
 
     if (newQuestion.trim() === "") return;
-    if (!user)
-      toast.error(
-        "Você precisa estar autenticado para enviar uma nova pergunta"
-      );
+    if (!user) isNotAuthenticatedToast();
 
     const question = {
       content: newQuestion,
@@ -52,9 +49,7 @@ export const Room = () => {
     setLoading(true);
 
     await database.ref(`/rooms/${id}/questions`).push(question);
-    toast.success("Sua pergunta foi enviada!", {
-      icon: "🥳",
-    });
+    questionSentToast();
 
     setLoading(false);
     setNewQuestion("");
