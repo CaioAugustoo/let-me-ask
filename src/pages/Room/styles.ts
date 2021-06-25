@@ -41,6 +41,10 @@ export const Main = styled.main`
   }
 `;
 
+export const QuestionList = styled.div`
+  margin-top: 32px;
+`;
+
 export const RoomTitle = styled.div`
   margin: 32px 0px 24px;
   display: flex;
