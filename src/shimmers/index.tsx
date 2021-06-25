@@ -13,7 +13,7 @@ export type SkeletonProps = {
 export const Shimmer = ({
   height,
   width = "100%",
-  radius = 0,
+  radius = 100,
   direction = 90,
   color = "#E3E3E3",
   highlightSize = 1000,

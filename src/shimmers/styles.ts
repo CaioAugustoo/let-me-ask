@@ -3,38 +3,6 @@ import styled, { css } from "styled-components";
 import { SkeletonProps } from ".";
 import { wavesKeyframes } from "./animation";
 
-const skeletonHeight = (height: number | string) => {
-  if (typeof height === "number") {
-    height = `${height}px`;
-
-    return css`
-      height: ${height};
-    `;
-  } else {
-    height = `${height}`;
-
-    return css`
-      height: ${height};
-    `;
-  }
-};
-
-const skeletonWidth = (width: number | string) => {
-  if (typeof width === "number") {
-    width = `${width}px`;
-
-    return css`
-      width: ${width};
-    `;
-  } else {
-    width = `${width}`;
-
-    return css`
-      width: ${width};
-    `;
-  }
-};
-
 export const Wrapper = styled.div<SkeletonProps>`
   ${({
     height,
@@ -46,8 +14,6 @@ export const Wrapper = styled.div<SkeletonProps>`
     highlightSize,
   }) => {
     return css`
-      ${skeletonWidth(width!)};
-      ${skeletonHeight(height!)};
       animation: ${wavesKeyframes};
       background: linear-gradient(
         ${direction}deg,
@@ -60,6 +26,8 @@ export const Wrapper = styled.div<SkeletonProps>`
       animation-timing-function: linear;
       animation-iteration-count: infinite;
       border-radius: ${radius}px;
+      height: ${height}px;
+      width: ${width}px;
     `;
   }}
 `;
