@@ -1,8 +1,6 @@
-import toast from "react-hot-toast";
+import { copiedToast } from "./toasts";
 
 export function copyToClipboard(value: string): Promise<void> {
-  toast("Copiado com sucesso!", {
-    icon: "👌",
-  });
+  copiedToast();
   return navigator.clipboard.writeText(value);
 }

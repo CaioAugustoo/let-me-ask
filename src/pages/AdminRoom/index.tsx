@@ -1,6 +1,8 @@
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { database } from "services/firebase";
 
 import brandLogo from "assets/images/logo.svg";
+import { ReactComponent as DeleteImg } from "assets/images/delete.svg";
 
 import { RoomTitleShimmer } from "shimmers/room";
 import { QuestionShimmer } from "shimmers/question";
@@ -11,8 +13,11 @@ import { RoomCode } from "components/RoomCode";
 import { Question } from "components/Question";
 
 import { useRoom } from "hooks/useRoom";
+import { useAuth } from "hooks/useAuth";
 
 import * as S from "./styles";
+
+import { deleteQuestionToast, isNotAdminToast } from "utils/toasts";
 
 export type RoomParams = {
   id: string;
@@ -20,7 +25,33 @@ export type RoomParams = {
 
 export const AdminRoom = () => {
   const { id } = useParams<RoomParams>();
+  const { user } = useAuth();
   const { isFetchingData, questions, roomData } = useRoom(id);
+  const { push } = useHistory();
+
+  async function handleDeleteQuestion(questionId: string) {
+    if (roomData?.authorId !== user?.id) {
+      isNotAdminToast();
+      return;
+    }
+
+    if (window.confirm("Tem certeza que deseja excluir essa pergunta?")) {
+      await database.ref(`rooms/${id}/questions/${questionId}`).remove();
+      deleteQuestionToast();
+    }
+  }
+
+  async function handleEndRoom() {
+    if (roomData?.authorId !== user?.id) {
+      isNotAdminToast();
+      return;
+    }
+
+    await database.ref(`rooms/${id}`).update({
+      endedAt: new Date(),
+    });
+    push("/");
+  }
 
   return (
     <>
@@ -32,9 +63,11 @@ export const AdminRoom = () => {
 
             <div>
               <RoomCode code={id} />
-              <Button type="button" isOutlined>
-                Encerrar sala
-              </Button>
+              {roomData?.authorId === user?.id && (
+                <Button type="button" isOutlined onClick={handleEndRoom}>
+                  Encerrar sala
+                </Button>
+              )}
             </div>
           </S.Content>
         </header>
@@ -56,7 +89,11 @@ export const AdminRoom = () => {
               <QuestionShimmer />
             ) : (
               questions.map(question => (
-                <Question key={question.id} {...question} />
+                <Question key={question.id} {...question}>
+                  <button onClick={() => handleDeleteQuestion(question.id)}>
+                    <DeleteImg />
+                  </button>
+                </Question>
               ))
             )}
           </S.QuestionList>
