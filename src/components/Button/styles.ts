@@ -1,32 +1,45 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { ButtonProps } from ".";
 
-export const Button = styled.button`
-  height: 50px;
-  border-radius: 8px;
-  font-weight: var(--font-medium);
-  background: var(--brand-bg);
-  color: #fff;
-  padding: 0 32px;
+const buttonModifiers = {
+  outlined: () => css`
+    background: #fff;
+    border: 1px solid var(--brand-bg);
+    color: var(--brand-bg);
+  `,
+};
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const Button = styled.button<Pick<ButtonProps, "isOutlined">>`
+  ${({ isOutlined }) => css`
+    height: 50px;
+    border-radius: 8px;
+    font-weight: var(--font-medium);
+    background: var(--brand-bg);
+    color: #fff;
+    padding: 0 32px;
 
-  cursor: pointer;
-  border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  transition: filter 0.2s;
+    cursor: pointer;
+    border: 0;
 
-  &:not(:disabled):hover {
-    filter: brightness(0.9);
-  }
+    transition: filter 0.2s;
 
-  img {
-    margin-right: 8px;
-  }
+    ${isOutlined && buttonModifiers.outlined()}
 
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+    &:not(:disabled):hover {
+      filter: brightness(0.9);
+    }
+
+    img {
+      margin-right: 8px;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  `}
 `;
