@@ -143,3 +143,9 @@ export const LikeButton = styled.button`
     cursor: not-allowed;
   }
 `;
+
+export const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
