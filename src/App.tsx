@@ -3,6 +3,8 @@ import { Home } from "pages/Home";
 import { Room } from "pages/Room";
 import { AdminRoom } from "pages/AdminRoom";
 
+import { ThemeButton } from "components/Theme";
+
 import { GlobalStyles } from "styles/global";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -23,6 +25,7 @@ function App() {
         </Switch>
       </UserStorage>
       <Toaster position="bottom-center" />
+      <ThemeButton />
       <GlobalStyles />
     </BrowserRouter>
   );

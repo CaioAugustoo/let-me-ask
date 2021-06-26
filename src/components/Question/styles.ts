@@ -6,15 +6,15 @@ export type WrapperProps = Pick<QuestionProps, "isAnswered" | "isHighlighted">;
 
 const wrapperModifiers = {
   default: () => css`
-    background: #fefefe;
+    background: var(--question);
     border: 1px solid transparent;
   `,
   isAnswered: () => css`
-    background: #dbdcdd;
-    border: initial;
+    background: var(--question-answered);
+    border: 1px solid transparent;
   `,
   isHighlighted: () => css`
-    background: #f4f0ff;
+    background: var(--question-highlighted);
     border: 1px solid var(--brand-bg);
   `,
 };

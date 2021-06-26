@@ -7,6 +7,7 @@ export const Button = styled.button`
 
   background: transparent;
   border: 1px solid var(--brand-bg);
+  color: var(--main-text);
 
   cursor: pointer;
   display: flex;
