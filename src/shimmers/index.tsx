@@ -7,7 +7,6 @@ export type SkeletonProps = {
   radius?: number;
   direction?: number;
   highlightSize?: number;
-  highlightColor?: string;
 };
 
 export const Shimmer = ({
@@ -17,7 +16,6 @@ export const Shimmer = ({
   direction = 90,
   color = "#E3E3E3",
   highlightSize = 1000,
-  highlightColor = "#fff",
 }: SkeletonProps) => {
   return (
     <S.Wrapper
@@ -27,7 +25,6 @@ export const Shimmer = ({
       radius={radius}
       direction={direction}
       highlightSize={highlightSize}
-      highlightColor={highlightColor}
       color={color}
     />
   );

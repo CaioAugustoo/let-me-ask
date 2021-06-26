@@ -35,7 +35,7 @@ export const Intro = styled.strong`
 
 export const About = styled.p`
   font-size: 24px;
-  color: var(--main);
+  color: #fff;
   line-height: 32px;
 
   margin-top: 16px;
@@ -70,8 +70,9 @@ export const Form = styled.form`
     height: 50px;
     border-radius: 8px;
     padding: 0 16px;
-    background: #fff;
-    border: 1px solid var(--gray);
+    background: var(--input);
+    border: 1px solid var(--borders);
+    color: var(--main-text);
   }
 
   button {
@@ -86,7 +87,7 @@ export const Form = styled.form`
 
 export const JoinRoom = styled.p`
   font-size: 14px;
-  color: var(--secondary-text);
+  color: var(--new-room-link);
   margin-top: 16px;
 
   a {

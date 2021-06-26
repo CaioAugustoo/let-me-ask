@@ -9,7 +9,7 @@ import { ReactComponent as AnswerImg } from "assets/images/answer.svg";
 import { RoomTitleShimmer } from "shimmers/room";
 import { QuestionShimmer } from "shimmers/question";
 
-import Head from "components/Helper/Head";
+import { Head } from "components/Helper/Head";
 import { Button } from "components/Button";
 import { RoomCode } from "components/RoomCode";
 import { Question } from "components/Question";
@@ -81,7 +81,7 @@ export const AdminRoom = () => {
 
   return (
     <>
-      <Head title={`Sala #${id}`} />
+      <Head title={`Sala ${roomData?.title ?? ""}`} />
       <S.Wrapper>
         <header>
           <S.Content>

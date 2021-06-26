@@ -4,12 +4,10 @@ export type HeadProps = {
   title: string;
 };
 
-const Head = ({ title }: HeadProps) => {
+export const Head = ({ title = "Home | Let me ask" }: HeadProps) => {
   useEffect(() => {
     document.title = title + " | Let me ask";
   }, [title]);
 
   return <></>;
 };
-
-export default Head;

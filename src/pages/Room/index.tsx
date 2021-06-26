@@ -8,7 +8,7 @@ import { ReactComponent as LikeImg } from "assets/images/like.svg";
 import { RoomTitleShimmer, UserInfoShimmer } from "shimmers/room";
 import { QuestionShimmer } from "shimmers/question";
 
-import Head from "components/Helper/Head";
+import { Head } from "components/Helper/Head";
 import { Button } from "components/Button";
 import { RoomCode } from "components/RoomCode";
 import { Question } from "components/Question";
@@ -16,8 +16,9 @@ import { Question } from "components/Question";
 import { useAuth } from "hooks/useAuth";
 import { useRoom } from "hooks/useRoom";
 
-import * as S from "./styles";
 import { isNotAuthenticatedToast, questionSentToast } from "utils/toasts";
+
+import * as S from "./styles";
 
 export type RoomParams = {
   id: string;
@@ -72,7 +73,7 @@ export const Room = () => {
 
   return (
     <>
-      <Head title={`Sala ${roomData?.title}`} />
+      <Head title={`Sala ${roomData?.title ?? ""}`} />
       <S.Wrapper>
         <header>
           <S.Content>
@@ -112,7 +113,6 @@ export const Room = () => {
                       <Link to="/">
                         <button>faça seu login</button>
                       </Link>
-                      .
                     </span>
                   ) : (
                     <S.UserInfo>
@@ -126,6 +126,7 @@ export const Room = () => {
               <Button
                 type="submit"
                 disabled={!user || loading || newQuestion.trim() === ""}
+                className="send-question"
               >
                 {loading ? "Enviando..." : "Enviar pergunta"}
               </Button>

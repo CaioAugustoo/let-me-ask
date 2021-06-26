@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   header {
     padding: 24px;
-    border-bottom: 1px solid #e2e2e2;
+    border-bottom: 1px solid var(--borders);
   }
 `;
 
@@ -35,7 +35,7 @@ export const Main = styled.main`
     padding: 0 30px;
   }
 
-  form button {
+  form .send-question {
     @media (max-width: 1000px) {
       height: 40px;
       padding: 0 20px;
@@ -48,12 +48,13 @@ export const Main = styled.main`
     border: 2px solid transparent;
     padding: 16px;
     border-radius: 8px;
-    background: #fefefe;
+    background: var(--text-area);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     resize: vertical;
     min-height: 130px !important;
     outline: none;
     transition: all 0.1s;
+    color: var(--main-text);
 
     &:disabled {
       opacity: 0.5;

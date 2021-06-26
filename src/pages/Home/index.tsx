@@ -1,17 +1,18 @@
+import { FormEvent, useState } from "react";
 import { useHistory } from "react-router";
+
+import { database } from "services/firebase";
 
 import homeIllustration from "assets/images/illustration.svg";
 import brandLogo from "assets/images/logo.svg";
 import googleIcon from "assets/images/google-icon.svg";
 
+import { roomEndedToast, roomNotFoundToast } from "utils/toasts";
+import { useAuth } from "hooks/useAuth";
+
 import { Button } from "components/Button";
 
 import * as S from "./styles";
-
-import { useAuth } from "hooks/useAuth";
-import { FormEvent, useState } from "react";
-import { database } from "services/firebase";
-import { roomEndedToast, roomNotFoundToast } from "utils/toasts";
 
 export const Home = () => {
   const [roomCode, setRoomCode] = useState("");
