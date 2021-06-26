@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { database } from "services/firebase";
 
 import brandLogo from "assets/images/logo.svg";
@@ -72,7 +72,7 @@ export const Room = () => {
 
   return (
     <>
-      <Head title={`Sala #${id}`} />
+      <Head title={`Sala ${roomData?.title}`} />
       <S.Wrapper>
         <header>
           <S.Content>
@@ -95,6 +95,7 @@ export const Room = () => {
 
           <form onSubmit={handleSendQuestion}>
             <textarea
+              disabled={!user}
               placeholder="O que você quer perguntar?"
               value={newQuestion}
               onChange={({ target }) => setNewQuestion(target.value)}
@@ -107,7 +108,11 @@ export const Room = () => {
                 <>
                   {!user ? (
                     <span>
-                      Para enviar uma pergunta, <button>faça seu login</button>.
+                      Para enviar uma pergunta,{" "}
+                      <Link to="/">
+                        <button>faça seu login</button>
+                      </Link>
+                      .
                     </span>
                   ) : (
                     <S.UserInfo>
@@ -132,8 +137,14 @@ export const Room = () => {
               <QuestionShimmer />
             ) : (
               questions.map(question => (
-                <Question key={question.id} {...question}>
+                <Question
+                  key={question.id}
+                  {...question}
+                  isAnswered={question.isAnswered}
+                  isHighlighted={question.isHighlighted}
+                >
                   <S.LikeButton
+                    disabled={!user}
                     className={question.likeId ? "liked" : ""}
                     aria-label="Marcar como gostei"
                     onClick={() =>

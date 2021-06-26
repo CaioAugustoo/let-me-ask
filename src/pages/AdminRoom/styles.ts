@@ -14,14 +14,26 @@ export const Content = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  @media (max-width: 1000px) {
+    justify-content: center;
+  }
+
   > img {
     max-height: 45px;
+
+    @media (max-width: 1000px) {
+      display: none;
+    }
   }
 
   > div {
     display: flex;
     align-items: center;
     gap: 16px;
+
+    @media (max-width: 1000px) {
+      flex-direction: column;
+    }
 
     button {
       height: 40px;
@@ -32,6 +44,10 @@ export const Content = styled.div`
 export const Main = styled.main`
   max-width: 800px;
   margin: 0 auto;
+
+  @media (max-width: 1000px) {
+    padding: 0 30px;
+  }
 
   form textarea {
     width: 100% !important;
@@ -59,6 +75,10 @@ export const RoomTitle = styled.div`
   margin: 32px 0px 24px;
   display: flex;
   align-items: center;
+
+  @media (max-width: 500px) {
+    justify-content: space-between;
+  }
 
   h1 {
     font-family: var(--font-secondary);

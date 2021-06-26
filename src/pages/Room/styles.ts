@@ -14,14 +14,34 @@ export const Content = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  @media (max-width: 1000px) {
+    justify-content: center;
+  }
+
   > img {
     max-height: 45px;
+
+    @media (max-width: 1000px) {
+      display: none;
+    }
   }
 `;
 
 export const Main = styled.main`
   max-width: 800px;
   margin: 0 auto;
+
+  @media (max-width: 1000px) {
+    padding: 0 30px;
+  }
+
+  form button {
+    @media (max-width: 1000px) {
+      height: 40px;
+      padding: 0 20px;
+      font-size: 14px;
+    }
+  }
 
   form textarea {
     width: 100% !important;
@@ -34,6 +54,11 @@ export const Main = styled.main`
     min-height: 130px !important;
     outline: none;
     transition: all 0.1s;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
 
     &:focus {
       border: 2px solid var(--brand-bg);
@@ -49,6 +74,10 @@ export const RoomTitle = styled.div`
   margin: 32px 0px 24px;
   display: flex;
   align-items: center;
+
+  @media (max-width: 500px) {
+    justify-content: space-between;
+  }
 
   h1 {
     font-family: var(--font-secondary);
@@ -108,4 +137,8 @@ export const UserInfo = styled.div`
   }
 `;
 
-export const LikeButton = styled.button``;
+export const LikeButton = styled.button`
+  &:disabled {
+    cursor: not-allowed;
+  }
+`;

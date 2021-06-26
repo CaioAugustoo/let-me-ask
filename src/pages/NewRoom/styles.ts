@@ -18,6 +18,10 @@ export const Aside = styled.aside`
 
   padding: 120px 80px;
 
+  @media (max-width: 1000px) {
+    display: none;
+  }
+
   img {
     max-width: 320px;
   }

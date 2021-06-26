@@ -21,6 +21,10 @@ export const Aside = styled.aside`
   img {
     max-width: 320px;
   }
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const Intro = styled.strong`

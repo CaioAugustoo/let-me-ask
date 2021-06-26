@@ -6,5 +6,9 @@ export const Wrapper = styled.div`
 
   div + div {
     margin-left: 15px;
+
+    @media (max-width: 1000px) {
+      margin-right: auto;
+    }
   }
 `;

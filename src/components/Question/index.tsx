@@ -5,11 +5,19 @@ export type QuestionProps = {
   content: string;
   author: User;
   children?: React.ReactNode;
+  isAnswered?: boolean;
+  isHighlighted?: boolean;
 };
 
-export const Question = ({ content, author, children }: QuestionProps) => {
+export const Question = ({
+  content,
+  author,
+  children,
+  isAnswered = false,
+  isHighlighted = false,
+}: QuestionProps) => {
   return (
-    <S.Wrapper>
+    <S.Wrapper isAnswered={isAnswered} isHighlighted={isHighlighted}>
       <S.Content>{content}</S.Content>
       <S.Footer>
         <S.UserInfo>

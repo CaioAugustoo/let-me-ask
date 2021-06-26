@@ -1,38 +1,71 @@
 import { LikeButton } from "pages/Room/styles";
-import styled from "styled-components";
+import { QuestionProps } from ".";
+import styled, { css } from "styled-components";
 
-export const Wrapper = styled.div`
-  background: #fefefe;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-  padding: 24px;
-  margin: 8px auto;
+export type WrapperProps = Pick<QuestionProps, "isAnswered" | "isHighlighted">;
 
-  button {
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-  }
+const wrapperModifiers = {
+  default: () => css`
+    background: #fefefe;
+    border: 1px solid transparent;
+  `,
+  isAnswered: () => css`
+    background: #dbdcdd;
+    border: initial;
+  `,
+  isHighlighted: () => css`
+    background: #f4f0ff;
+    border: 1px solid var(--brand-bg);
+  `,
+};
 
-  ${LikeButton} {
-    display: flex;
-    align-items: flex-end;
-    color: var(--secondary-text);
-    gap: 8px;
-    transition: filter 0.2s;
+export const Wrapper = styled.div<WrapperProps>`
+  ${({ isAnswered, isHighlighted }) => css`
+    ${isHighlighted && !isAnswered
+      ? wrapperModifiers.isHighlighted()
+      : wrapperModifiers.isAnswered()}
+    ${!isAnswered && !isHighlighted && wrapperModifiers.default()}
 
-    &.liked {
-      color: var(--brand-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    padding: 24px;
+    margin: 8px auto;
 
-      svg path {
-        stroke: var(--brand-bg);
+    @media (max-width: 1000px) {
+      padding: 20px;
+    }
+
+    button {
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    div {
+      display: flex;
+      gap: 10px;
+    }
+
+    ${LikeButton} {
+      display: flex;
+      align-items: flex-end;
+      color: var(--secondary-text);
+      gap: 8px;
+      transition: filter 0.2s;
+
+      &.liked {
+        color: var(--brand-bg);
+
+        svg path {
+          stroke: var(--brand-bg);
+        }
+      }
+
+      &:hover {
+        filter: brightness(0.7);
       }
     }
-
-    &:hover {
-      filter: brightness(0.7);
-    }
-  }
+  `}
 `;
 
 export const Content = styled.p`
@@ -57,7 +90,6 @@ export const UserInfo = styled.div`
   }
 
   span {
-    margin-left: 10px;
     color: var(--secondary-text);
     font-size: 14px;
   }
