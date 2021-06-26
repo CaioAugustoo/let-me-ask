@@ -13,6 +13,7 @@ import { Head } from "components/Helper/Head";
 import { Button } from "components/Button";
 import { RoomCode } from "components/RoomCode";
 import { Question } from "components/Question";
+import { ThemeButton } from "components/Theme";
 
 import { useRoom } from "hooks/useRoom";
 import { useAuth } from "hooks/useAuth";
@@ -94,6 +95,7 @@ export const AdminRoom = () => {
                   Encerrar sala
                 </Button>
               )}
+              <ThemeButton />
             </div>
           </S.Content>
         </header>

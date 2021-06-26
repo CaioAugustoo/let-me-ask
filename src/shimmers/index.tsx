@@ -19,7 +19,7 @@ export const Shimmer = ({
 }: SkeletonProps) => {
   return (
     <S.Wrapper
-      title="Loading data..."
+      title="Carregando..."
       height={height}
       width={width}
       radius={radius}

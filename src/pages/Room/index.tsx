@@ -12,6 +12,7 @@ import { Head } from "components/Helper/Head";
 import { Button } from "components/Button";
 import { RoomCode } from "components/RoomCode";
 import { Question } from "components/Question";
+import { ThemeButton } from "components/Theme";
 
 import { useAuth } from "hooks/useAuth";
 import { useRoom } from "hooks/useRoom";
@@ -78,7 +79,11 @@ export const Room = () => {
         <header>
           <S.Content>
             <img src={brandLogo} alt="Letmeask logo" />
-            <RoomCode code={id} />
+
+            <S.Flex>
+              <RoomCode code={id} />
+              <ThemeButton />
+            </S.Flex>
           </S.Content>
         </header>
 

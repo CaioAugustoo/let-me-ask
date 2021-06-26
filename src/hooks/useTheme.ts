@@ -19,5 +19,5 @@ export const useTheme = () => {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
 
-  return { changeTheme };
+  return { theme, changeTheme };
 };
